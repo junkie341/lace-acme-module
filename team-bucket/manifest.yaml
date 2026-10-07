@@ -1,0 +1,12 @@
+apiVersion: '1'
+axis: module
+author: acme-corp
+name: team-bucket
+version: v1.0.0
+displayName: Team S3 Bucket
+description: ACME's own private, encrypted, versioned S3 bucket, for ACME only.
+configSchema: {}
+runtime:
+  location: in-tree
+bundle:
+  system: aws
