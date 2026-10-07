@@ -1,0 +1,21 @@
+name: publish-module
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+  id-token: write
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install minisign
+        run: sudo apt-get update && sudo apt-get install -y minisign
+      - name: Install lace
+        run: curl -fsSL https://releases.lace.cloud/install.sh | sudo sh -s -- --version v2.38.0
+      - name: Validate and publish the module
+        env:
+          LACE_API_KEY: ${{ secrets.LACE_API_KEY }}
+        run: |
+          lace module validate --path team-bucket
+          lace registry register --org acme-corp --axis module --manifest team-bucket/manifest.yaml --path team-bucket
